@@ -1,4 +1,4 @@
-# MultiNet v2.0 — Operator Guide
+# 2D Maze Agent Benchmark — Operator Guide
 
 How to install, run, and score evaluations. The public front page is
 [README.md](./README.md); design docs are indexed in [docs/](./docs/README.md).
@@ -12,7 +12,7 @@ conda create -n multinet-v2 python=3.10 && conda activate multinet-v2
 pip install -e ".[dev,visual]"
 ```
 
-The `ogbench` submodule (~50 MB) supplies the evaluation maze corpus; the
+The vendored `ogbench` benchmark corpus supplies the evaluation maze corpus; the
 test suite and the R1 manifests both resolve mazes from it.
 
 ## 2. Verify the install
