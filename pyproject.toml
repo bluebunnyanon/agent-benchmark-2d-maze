@@ -1,0 +1,100 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "multinet-v2-0"
+version = "2.0.0"
+description = "Gridworld and multigrid evaluation harness for multimodal model benchmarking."
+readme = "README.md"
+requires-python = ">=3.10"
+license = {text = "MIT"}
+authors = [{name = "Anonymous Authors"}]
+dependencies = [
+    "gymnasium",
+    "minigrid",
+    "numpy",
+    "pillow",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest",
+]
+web = [
+    "fastapi",
+    "uvicorn[standard]",
+    "httpx",
+]
+visual = [
+    "matplotlib",
+    "pygame",
+]
+hf = [
+    "torch",
+    "torchvision",
+    "transformers",
+    "accelerate",
+    "safetensors",
+]
+vllm = [
+    "vllm==0.19.0",
+]
+
+
+
+
+[project.scripts]
+multinet-run-eval = "run_eval:main"
+multinet-play-task = "play_task:main"
+multinet-chat-smoke = "scripts.chat_smoke_test:main"
+multinet-probe-vlm = "scripts.probe_vlm:main"
+multinet-ollama-vision-check = "scripts.ollama_vision_check:main"
+multinet-ollama-maze-shape-check = "scripts.ollama_maze_shape_check:main"
+multinet-vlm-sanity = "scripts.vlm_sanity_check:main"
+multinet-preview-prompts = "prompting_experiments.preview_prompts:main"
+multinet-score-json = "scripts.score_json:main"
+multinet-run-pipeline = "scripts.run_pipeline:main"
+
+[tool.pytest.ini_options]
+# The vendored `ogbench` submodule ships its own tests whose basenames collide
+# with ours (BFS_solver.py, maze_test_utils.py, test_S_maze_types.py). Under the
+# default prepend import-mode that shadows our modules and breaks whole-suite
+# collection (`ImportError: cannot import name 'solve' from BFS_solver`), so a
+# bare `pytest` run aborts having run zero tests. Keep ogbench out of collection.
+# Multinet-v2-results is the sibling data repo (often checked out nested here);
+# it now hosts the moved analysis package + its tests, which import `analysis.*`
+# and must not be collected from this repo.
+addopts = "--ignore=ogbench --ignore=Multinet-v2-results -m 'not slow'"
+markers = [
+    "slow: load-sensitive performance/scalability benchmarks; excluded by default, run with -m slow",
+]
+
+[tool.setuptools]
+include-package-data = true
+py-modules = [
+    "evaluation_harness",
+    "model_interface",
+    "play_task",
+    "run_eval",
+    "visualize_all_tilings",
+]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = [
+    "adapters*",
+    "cross_domain*",
+    "demo*",
+    "gridworld*",
+    "interface*",
+    "multigrid*",
+    "pipeline*",
+    "prompting_experiments*",
+    "scorer*",
+    "scripts*",
+]
+
+[tool.setuptools.package-data]
+gridworld = ["tasks/**/*.json", "tasks/*.json", "fixtures/**/*.json", "fixtures/*.json"]
+scorer = ["scorer_config.json"]

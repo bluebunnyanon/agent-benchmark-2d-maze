@@ -1,0 +1,827 @@
+{
+  "description": "Fixture manifest for the bare-bones run pipeline (tests 1-3) plus the R1 eval set (experiment=r1; B1 excluded). route_short_cells/route_long_cells on test2 rows are populated by scripts/validate_fixtures.py.",
+  "tasks": [
+    {
+      "task_id": "validation_10_v01_empty_room",
+      "experiment": "test1",
+      "condition": "default",
+      "variant": "empty_room",
+      "source": "mazes/validation_10/V01_empty_room.json",
+      "expected_mechanisms": [],
+      "notes": "Baseline empty room."
+    },
+    {
+      "task_id": "validation_10_v02_winding_corridor",
+      "experiment": "test1",
+      "condition": "default",
+      "variant": "winding_corridor",
+      "source": "mazes/validation_10/V02_winding_corridor.json",
+      "expected_mechanisms": [],
+      "notes": "Navigation only."
+    },
+    {
+      "task_id": "validation_10_v03_multi_path",
+      "experiment": "test1",
+      "condition": "default",
+      "variant": "multi_path",
+      "source": "mazes/validation_10/V03_multi_path.json",
+      "expected_mechanisms": [],
+      "notes": "Also used for test2."
+    },
+    {
+      "task_id": "validation_10_v04_single_key",
+      "experiment": "test1",
+      "condition": "default",
+      "variant": "single_key",
+      "source": "mazes/validation_10/V04_single_key.json",
+      "expected_mechanisms": [
+        "kR"
+      ],
+      "notes": "Single key-door."
+    },
+    {
+      "task_id": "validation_10_v05_single_switch",
+      "experiment": "test1",
+      "condition": "default",
+      "variant": "single_switch",
+      "source": "mazes/validation_10/V05_single_switch.json",
+      "expected_mechanisms": [
+        "s1"
+      ],
+      "notes": "Single switch-gate."
+    },
+    {
+      "task_id": "validation_10_v06_chain_ks",
+      "experiment": "test1",
+      "condition": "default",
+      "variant": "chain_ks",
+      "source": "mazes/validation_10/V06_chain_ks.json",
+      "expected_mechanisms": [
+        "kR",
+        "s1"
+      ],
+      "notes": "Also used for test3 (key-first)."
+    },
+    {
+      "task_id": "validation_10_v07_chain_sk",
+      "experiment": "test1",
+      "condition": "default",
+      "variant": "chain_sk",
+      "source": "mazes/validation_10/V07_chain_sk.json",
+      "expected_mechanisms": [
+        "s1",
+        "kR"
+      ],
+      "notes": "Also used for test3 (switch-first)."
+    },
+    {
+      "task_id": "validation_10_v08_chain_kk",
+      "experiment": "test1",
+      "condition": "default",
+      "variant": "chain_kk",
+      "source": "mazes/validation_10/V08_chain_kk.json",
+      "expected_mechanisms": [],
+      "notes": "Two-key chain."
+    },
+    {
+      "task_id": "validation_10_v09_distractor_simple",
+      "experiment": "test1",
+      "condition": "default",
+      "variant": "distractor_simple",
+      "source": "mazes/validation_10/V09_distractor_simple.json",
+      "expected_mechanisms": [],
+      "notes": "Distractor present."
+    },
+    {
+      "task_id": "validation_10_v10_distractor_chain",
+      "experiment": "test1",
+      "condition": "default",
+      "variant": "distractor_chain",
+      "source": "mazes/validation_10/V10_distractor_chain.json",
+      "expected_mechanisms": [],
+      "notes": "Distractor chain."
+    },
+    {
+      "task_id": "validation_10_v03_multi_path__t2",
+      "experiment": "test2",
+      "condition": "multi_path",
+      "variant": "open_routes",
+      "source": "mazes/validation_10/V03_multi_path.json",
+      "expected_mechanisms": [],
+      "route_block": [
+        5,
+        6
+      ],
+      "notes": "Three open routes; route_block forces a longer route to discriminate path_choice.",
+      "route_short_cells": [
+        [
+          2,
+          6
+        ],
+        [
+          3,
+          6
+        ],
+        [
+          4,
+          6
+        ],
+        [
+          5,
+          5
+        ],
+        [
+          5,
+          6
+        ],
+        [
+          6,
+          5
+        ],
+        [
+          7,
+          5
+        ],
+        [
+          8,
+          5
+        ],
+        [
+          9,
+          5
+        ],
+        [
+          10,
+          5
+        ]
+      ],
+      "route_long_cells": [
+        [
+          1,
+          7
+        ],
+        [
+          1,
+          8
+        ],
+        [
+          2,
+          8
+        ],
+        [
+          3,
+          8
+        ],
+        [
+          4,
+          8
+        ],
+        [
+          4,
+          9
+        ],
+        [
+          4,
+          10
+        ],
+        [
+          5,
+          10
+        ],
+        [
+          6,
+          10
+        ],
+        [
+          7,
+          10
+        ],
+        [
+          8,
+          6
+        ],
+        [
+          8,
+          7
+        ],
+        [
+          8,
+          8
+        ],
+        [
+          8,
+          9
+        ],
+        [
+          8,
+          10
+        ],
+        [
+          9,
+          6
+        ]
+      ]
+    },
+    {
+      "task_id": "T2_corridor_shortcut",
+      "experiment": "test2",
+      "condition": "shortcut",
+      "variant": "door_shortcut",
+      "source": "gridworld/fixtures/test2/T2_corridor_shortcut.json",
+      "expected_mechanisms": [
+        "kB"
+      ],
+      "route_block": [
+        4,
+        1
+      ],
+      "notes": "Short mechanistic (door) route vs long open detour; route_block is the door cell.",
+      "route_short_cells": [
+        [
+          1,
+          2
+        ],
+        [
+          3,
+          1
+        ],
+        [
+          4,
+          1
+        ],
+        [
+          5,
+          1
+        ],
+        [
+          6,
+          1
+        ]
+      ],
+      "route_long_cells": [
+        [
+          2,
+          2
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          2,
+          5
+        ],
+        [
+          3,
+          5
+        ],
+        [
+          4,
+          5
+        ],
+        [
+          5,
+          5
+        ],
+        [
+          6,
+          5
+        ],
+        [
+          7,
+          2
+        ],
+        [
+          7,
+          3
+        ],
+        [
+          7,
+          4
+        ],
+        [
+          7,
+          5
+        ]
+      ]
+    },
+    {
+      "task_id": "T3_corr_key_first",
+      "experiment": "test3",
+      "condition": "key_first",
+      "variant": "ks",
+      "pair_id": "corridor",
+      "source": "gridworld/fixtures/test3/T3_corr_key_first.json",
+      "expected_mechanisms": [
+        "kB",
+        "s1"
+      ],
+      "notes": "Single-row corridor, key-first; matched with switch-first."
+    },
+    {
+      "task_id": "T3_corr_switch_first",
+      "experiment": "test3",
+      "condition": "switch_first",
+      "variant": "sk",
+      "pair_id": "corridor",
+      "source": "gridworld/fixtures/test3/T3_corr_switch_first.json",
+      "expected_mechanisms": [
+        "s1",
+        "kB"
+      ],
+      "notes": "Single-row corridor, switch-first; matched with key-first."
+    },
+    {
+      "task_id": "T3_corr2_key_first",
+      "experiment": "test3",
+      "condition": "key_first",
+      "variant": "ks",
+      "pair_id": "corridor2",
+      "source": "gridworld/fixtures/test3/T3_corr2_key_first.json",
+      "expected_mechanisms": [
+        "kB",
+        "s1"
+      ],
+      "notes": "Longer single-row corridor, key-first; matched with switch-first."
+    },
+    {
+      "task_id": "T3_corr2_switch_first",
+      "experiment": "test3",
+      "condition": "switch_first",
+      "variant": "sk",
+      "pair_id": "corridor2",
+      "source": "gridworld/fixtures/test3/T3_corr2_switch_first.json",
+      "expected_mechanisms": [
+        "s1",
+        "kB"
+      ],
+      "notes": "Longer single-row corridor, switch-first; matched with key-first."
+    },
+    {
+      "task_id": "r1_D1_10x10_dense_wrong_ky_kr_sg_kb_0",
+      "experiment": "r1",
+      "condition": "D",
+      "variant": "10x10_dense_wrong_ky_kr_sg_kb_0",
+      "source": "ogbench/ogbench/procgen/maze_jsons/D1/10x10_dense_wrong_ky_kr_sg_kb_0.json",
+      "expected_mechanisms": [],
+      "maze_family": "D",
+      "maze_category": "D1",
+      "notes": "topology=dense_dead_ends; grid=10"
+    },
+    {
+      "task_id": "r1_D1_10x10_dense_wrong_ky_kr_sg_kb_1",
+      "experiment": "r1",
+      "condition": "D",
+      "variant": "10x10_dense_wrong_ky_kr_sg_kb_1",
+      "source": "ogbench/ogbench/procgen/maze_jsons/D1/10x10_dense_wrong_ky_kr_sg_kb_1.json",
+      "expected_mechanisms": [],
+      "maze_family": "D",
+      "maze_category": "D1",
+      "notes": "topology=dense_dead_ends; grid=10"
+    },
+    {
+      "task_id": "r1_D2_10x10_corridor_wrong_ky_kr_inactive_sb_sg_kb_0",
+      "experiment": "r1",
+      "condition": "D",
+      "variant": "10x10_corridor_wrong_ky_kr_inactive_sb_sg_kb_0",
+      "source": "ogbench/ogbench/procgen/maze_jsons/D2/10x10_corridor_wrong_ky_kr_inactive_sb_sg_kb_0.json",
+      "expected_mechanisms": [],
+      "maze_family": "D",
+      "maze_category": "D2",
+      "notes": "topology=winding; grid=10"
+    },
+    {
+      "task_id": "r1_D2_10x10_dense_wrong_ky_kr_inactive_sb_sg_kb_0",
+      "experiment": "r1",
+      "condition": "D",
+      "variant": "10x10_dense_wrong_ky_kr_inactive_sb_sg_kb_0",
+      "source": "ogbench/ogbench/procgen/maze_jsons/D2/10x10_dense_wrong_ky_kr_inactive_sb_sg_kb_0.json",
+      "expected_mechanisms": [],
+      "maze_family": "D",
+      "maze_category": "D2",
+      "notes": "topology=dense_dead_ends; grid=10"
+    },
+    {
+      "task_id": "r1_D2_14x14_dense_wrong_ky_inactive_sb_sg_kr_1",
+      "experiment": "r1",
+      "condition": "D",
+      "variant": "14x14_dense_wrong_ky_inactive_sb_sg_kr_1",
+      "source": "ogbench/ogbench/procgen/maze_jsons/D2/14x14_dense_wrong_ky_inactive_sb_sg_kr_1.json",
+      "expected_mechanisms": [],
+      "maze_family": "D",
+      "maze_category": "D2",
+      "notes": "topology=dense_dead_ends; grid=14"
+    },
+    {
+      "task_id": "r1_D2_14x14_dense_wrong_ky_kr_inactive_sb_sg_1",
+      "experiment": "r1",
+      "condition": "D",
+      "variant": "14x14_dense_wrong_ky_kr_inactive_sb_sg_1",
+      "source": "ogbench/ogbench/procgen/maze_jsons/D2/14x14_dense_wrong_ky_kr_inactive_sb_sg_1.json",
+      "expected_mechanisms": [],
+      "maze_family": "D",
+      "maze_category": "D2",
+      "notes": "topology=dense_dead_ends; grid=14"
+    },
+    {
+      "task_id": "r1_D2_14x14_dense_wrong_ky_kr_inactive_sb_sg_kb_0",
+      "experiment": "r1",
+      "condition": "D",
+      "variant": "14x14_dense_wrong_ky_kr_inactive_sb_sg_kb_0",
+      "source": "ogbench/ogbench/procgen/maze_jsons/D2/14x14_dense_wrong_ky_kr_inactive_sb_sg_kb_0.json",
+      "expected_mechanisms": [],
+      "maze_family": "D",
+      "maze_category": "D2",
+      "notes": "topology=dense_dead_ends; grid=14"
+    },
+    {
+      "task_id": "r1_D2_14x14_dense_wrong_ky_kr_inactive_sb_sg_kb_1",
+      "experiment": "r1",
+      "condition": "D",
+      "variant": "14x14_dense_wrong_ky_kr_inactive_sb_sg_kb_1",
+      "source": "ogbench/ogbench/procgen/maze_jsons/D2/14x14_dense_wrong_ky_kr_inactive_sb_sg_kb_1.json",
+      "expected_mechanisms": [],
+      "maze_family": "D",
+      "maze_category": "D2",
+      "notes": "topology=dense_dead_ends; grid=14"
+    },
+    {
+      "task_id": "r1_D2_8x8_corridor_wrong_ky_inactive_sb_sg_kr_1",
+      "experiment": "r1",
+      "condition": "D",
+      "variant": "8x8_corridor_wrong_ky_inactive_sb_sg_kr_1",
+      "source": "ogbench/ogbench/procgen/maze_jsons/D2/8x8_corridor_wrong_ky_inactive_sb_sg_kr_1.json",
+      "expected_mechanisms": [],
+      "maze_family": "D",
+      "maze_category": "D2",
+      "notes": "topology=winding; grid=8"
+    },
+    {
+      "task_id": "r1_D3_10x10_dense_deadend_ky_dy_1",
+      "experiment": "r1",
+      "condition": "D",
+      "variant": "10x10_dense_deadend_ky_dy_1",
+      "source": "ogbench/ogbench/procgen/maze_jsons/D3/10x10_dense_deadend_ky_dy_1.json",
+      "expected_mechanisms": [],
+      "maze_family": "D",
+      "maze_category": "D3",
+      "notes": "topology=dense_dead_ends; grid=10"
+    },
+    {
+      "task_id": "r1_M1_10x10_corridor_kr_1",
+      "experiment": "r1",
+      "condition": "M",
+      "variant": "10x10_corridor_kr_1",
+      "source": "ogbench/ogbench/procgen/maze_jsons/M1/10x10_corridor_kr_1.json",
+      "expected_mechanisms": [],
+      "maze_family": "M",
+      "maze_category": "M1",
+      "notes": "topology=winding; grid=10"
+    },
+    {
+      "task_id": "r1_M1_10x10_dense_kr_0",
+      "experiment": "r1",
+      "condition": "M",
+      "variant": "10x10_dense_kr_0",
+      "source": "ogbench/ogbench/procgen/maze_jsons/M1/10x10_dense_kr_0.json",
+      "expected_mechanisms": [],
+      "maze_family": "M",
+      "maze_category": "M1",
+      "notes": "topology=dense_dead_ends; grid=10"
+    },
+    {
+      "task_id": "r1_M1_14x14_corridor_kr_0",
+      "experiment": "r1",
+      "condition": "M",
+      "variant": "14x14_corridor_kr_0",
+      "source": "ogbench/ogbench/procgen/maze_jsons/M1/14x14_corridor_kr_0.json",
+      "expected_mechanisms": [],
+      "maze_family": "M",
+      "maze_category": "M1",
+      "notes": "topology=winding; grid=14"
+    },
+    {
+      "task_id": "r1_M1_14x14_corridor_kr_1",
+      "experiment": "r1",
+      "condition": "M",
+      "variant": "14x14_corridor_kr_1",
+      "source": "ogbench/ogbench/procgen/maze_jsons/M1/14x14_corridor_kr_1.json",
+      "expected_mechanisms": [],
+      "maze_family": "M",
+      "maze_category": "M1",
+      "notes": "topology=winding; grid=14"
+    },
+    {
+      "task_id": "r1_M1_14x14_dense_kr_0",
+      "experiment": "r1",
+      "condition": "M",
+      "variant": "14x14_dense_kr_0",
+      "source": "ogbench/ogbench/procgen/maze_jsons/M1/14x14_dense_kr_0.json",
+      "expected_mechanisms": [],
+      "maze_family": "M",
+      "maze_category": "M1",
+      "notes": "topology=dense_dead_ends; grid=14"
+    },
+    {
+      "task_id": "r1_M1_14x14_dense_kr_1",
+      "experiment": "r1",
+      "condition": "M",
+      "variant": "14x14_dense_kr_1",
+      "source": "ogbench/ogbench/procgen/maze_jsons/M1/14x14_dense_kr_1.json",
+      "expected_mechanisms": [],
+      "maze_family": "M",
+      "maze_category": "M1",
+      "notes": "topology=dense_dead_ends; grid=14"
+    },
+    {
+      "task_id": "r1_M1_8x8_corridor_kr_0",
+      "experiment": "r1",
+      "condition": "M",
+      "variant": "8x8_corridor_kr_0",
+      "source": "ogbench/ogbench/procgen/maze_jsons/M1/8x8_corridor_kr_0.json",
+      "expected_mechanisms": [],
+      "maze_family": "M",
+      "maze_category": "M1",
+      "notes": "topology=winding; grid=8"
+    },
+    {
+      "task_id": "r1_M1_8x8_corridor_kr_1",
+      "experiment": "r1",
+      "condition": "M",
+      "variant": "8x8_corridor_kr_1",
+      "source": "ogbench/ogbench/procgen/maze_jsons/M1/8x8_corridor_kr_1.json",
+      "expected_mechanisms": [],
+      "maze_family": "M",
+      "maze_category": "M1",
+      "notes": "topology=winding; grid=8"
+    },
+    {
+      "task_id": "r1_M2_10x10_corridor_sg_1",
+      "experiment": "r1",
+      "condition": "M",
+      "variant": "10x10_corridor_sg_1",
+      "source": "ogbench/ogbench/procgen/maze_jsons/M2/10x10_corridor_sg_1.json",
+      "expected_mechanisms": [],
+      "maze_family": "M",
+      "maze_category": "M2",
+      "notes": "topology=winding; grid=10"
+    },
+    {
+      "task_id": "r1_M2_10x10_dense_sg_0",
+      "experiment": "r1",
+      "condition": "M",
+      "variant": "10x10_dense_sg_0",
+      "source": "ogbench/ogbench/procgen/maze_jsons/M2/10x10_dense_sg_0.json",
+      "expected_mechanisms": [],
+      "maze_family": "M",
+      "maze_category": "M2",
+      "notes": "topology=dense_dead_ends; grid=10"
+    },
+    {
+      "task_id": "r1_M2_14x14_corridor_sg_0",
+      "experiment": "r1",
+      "condition": "M",
+      "variant": "14x14_corridor_sg_0",
+      "source": "ogbench/ogbench/procgen/maze_jsons/M2/14x14_corridor_sg_0.json",
+      "expected_mechanisms": [],
+      "maze_family": "M",
+      "maze_category": "M2",
+      "notes": "topology=winding; grid=14"
+    },
+    {
+      "task_id": "r1_M2_14x14_corridor_sg_1",
+      "experiment": "r1",
+      "condition": "M",
+      "variant": "14x14_corridor_sg_1",
+      "source": "ogbench/ogbench/procgen/maze_jsons/M2/14x14_corridor_sg_1.json",
+      "expected_mechanisms": [],
+      "maze_family": "M",
+      "maze_category": "M2",
+      "notes": "topology=winding; grid=14"
+    },
+    {
+      "task_id": "r1_M2_14x14_dense_sg_0",
+      "experiment": "r1",
+      "condition": "M",
+      "variant": "14x14_dense_sg_0",
+      "source": "ogbench/ogbench/procgen/maze_jsons/M2/14x14_dense_sg_0.json",
+      "expected_mechanisms": [],
+      "maze_family": "M",
+      "maze_category": "M2",
+      "notes": "topology=dense_dead_ends; grid=14"
+    },
+    {
+      "task_id": "r1_M2_14x14_dense_sg_1",
+      "experiment": "r1",
+      "condition": "M",
+      "variant": "14x14_dense_sg_1",
+      "source": "ogbench/ogbench/procgen/maze_jsons/M2/14x14_dense_sg_1.json",
+      "expected_mechanisms": [],
+      "maze_family": "M",
+      "maze_category": "M2",
+      "notes": "topology=dense_dead_ends; grid=14"
+    },
+    {
+      "task_id": "r1_M2_8x8_corridor_sg_0",
+      "experiment": "r1",
+      "condition": "M",
+      "variant": "8x8_corridor_sg_0",
+      "source": "ogbench/ogbench/procgen/maze_jsons/M2/8x8_corridor_sg_0.json",
+      "expected_mechanisms": [],
+      "maze_family": "M",
+      "maze_category": "M2",
+      "notes": "topology=winding; grid=8"
+    },
+    {
+      "task_id": "r1_M2_8x8_corridor_sg_1",
+      "experiment": "r1",
+      "condition": "M",
+      "variant": "8x8_corridor_sg_1",
+      "source": "ogbench/ogbench/procgen/maze_jsons/M2/8x8_corridor_sg_1.json",
+      "expected_mechanisms": [],
+      "maze_family": "M",
+      "maze_category": "M2",
+      "notes": "topology=winding; grid=8"
+    },
+    {
+      "task_id": "r1_M3_10x10_dense_kr_sg_0",
+      "experiment": "r1",
+      "condition": "M",
+      "variant": "10x10_dense_kr_sg_0",
+      "source": "ogbench/ogbench/procgen/maze_jsons/M3/10x10_dense_kr_sg_0.json",
+      "expected_mechanisms": [],
+      "maze_family": "M",
+      "maze_category": "M3",
+      "notes": "topology=dense_dead_ends; grid=10"
+    },
+    {
+      "task_id": "r1_M3_10x10_dense_kr_sg_1",
+      "experiment": "r1",
+      "condition": "M",
+      "variant": "10x10_dense_kr_sg_1",
+      "source": "ogbench/ogbench/procgen/maze_jsons/M3/10x10_dense_kr_sg_1.json",
+      "expected_mechanisms": [],
+      "maze_family": "M",
+      "maze_category": "M3",
+      "notes": "topology=dense_dead_ends; grid=10"
+    },
+    {
+      "task_id": "r1_M3_14x14_dense_kr_sg_0",
+      "experiment": "r1",
+      "condition": "M",
+      "variant": "14x14_dense_kr_sg_0",
+      "source": "ogbench/ogbench/procgen/maze_jsons/M3/14x14_dense_kr_sg_0.json",
+      "expected_mechanisms": [],
+      "maze_family": "M",
+      "maze_category": "M3",
+      "notes": "topology=dense_dead_ends; grid=14"
+    },
+    {
+      "task_id": "r1_M3_8x8_corridor_kr_sg_1",
+      "experiment": "r1",
+      "condition": "M",
+      "variant": "8x8_corridor_kr_sg_1",
+      "source": "ogbench/ogbench/procgen/maze_jsons/M3/8x8_corridor_kr_sg_1.json",
+      "expected_mechanisms": [],
+      "maze_family": "M",
+      "maze_category": "M3",
+      "notes": "topology=winding; grid=8"
+    },
+    {
+      "task_id": "r1_M4_10x10_dense_sg_kr_0",
+      "experiment": "r1",
+      "condition": "M",
+      "variant": "10x10_dense_sg_kr_0",
+      "source": "ogbench/ogbench/procgen/maze_jsons/M4/10x10_dense_sg_kr_0.json",
+      "expected_mechanisms": [],
+      "maze_family": "M",
+      "maze_category": "M4",
+      "notes": "topology=dense; grid=10"
+    },
+    {
+      "task_id": "r1_M4_10x10_dense_sg_kr_1",
+      "experiment": "r1",
+      "condition": "M",
+      "variant": "10x10_dense_sg_kr_1",
+      "source": "ogbench/ogbench/procgen/maze_jsons/M4/10x10_dense_sg_kr_1.json",
+      "expected_mechanisms": [],
+      "maze_family": "M",
+      "maze_category": "M4",
+      "notes": "topology=dense_dead_ends; grid=10"
+    },
+    {
+      "task_id": "r1_M4_8x8_corridor_sg_kr_1",
+      "experiment": "r1",
+      "condition": "M",
+      "variant": "8x8_corridor_sg_kr_1",
+      "source": "ogbench/ogbench/procgen/maze_jsons/M4/8x8_corridor_sg_kr_1.json",
+      "expected_mechanisms": [],
+      "maze_family": "M",
+      "maze_category": "M4",
+      "notes": "topology=winding; grid=8"
+    },
+    {
+      "task_id": "r1_M5_10x10_dense_kr_kb_0",
+      "experiment": "r1",
+      "condition": "M",
+      "variant": "10x10_dense_kr_kb_0",
+      "source": "ogbench/ogbench/procgen/maze_jsons/M5/10x10_dense_kr_kb_0.json",
+      "expected_mechanisms": [],
+      "maze_family": "M",
+      "maze_category": "M5",
+      "notes": "topology=dense_dead_ends; grid=10"
+    },
+    {
+      "task_id": "r1_M5_10x10_dense_kr_kb_1",
+      "experiment": "r1",
+      "condition": "M",
+      "variant": "10x10_dense_kr_kb_1",
+      "source": "ogbench/ogbench/procgen/maze_jsons/M5/10x10_dense_kr_kb_1.json",
+      "expected_mechanisms": [],
+      "maze_family": "M",
+      "maze_category": "M5",
+      "notes": "topology=dense_dead_ends; grid=10"
+    },
+    {
+      "task_id": "r1_M5_8x8_corridor_kr_kb_1",
+      "experiment": "r1",
+      "condition": "M",
+      "variant": "8x8_corridor_kr_kb_1",
+      "source": "ogbench/ogbench/procgen/maze_jsons/M5/8x8_corridor_kr_kb_1.json",
+      "expected_mechanisms": [],
+      "maze_family": "M",
+      "maze_category": "M5",
+      "notes": "topology=winding; grid=8"
+    },
+    {
+      "task_id": "r1_M6_14x14_dense_kr_sg_kb_0",
+      "experiment": "r1",
+      "condition": "M",
+      "variant": "14x14_dense_kr_sg_kb_0",
+      "source": "ogbench/ogbench/procgen/maze_jsons/M6/14x14_dense_kr_sg_kb_0.json",
+      "expected_mechanisms": [],
+      "maze_family": "M",
+      "maze_category": "M6",
+      "notes": "topology=dense_dead_ends; grid=14"
+    },
+    {
+      "task_id": "r1_M6_14x14_dense_kr_sg_kb_1",
+      "experiment": "r1",
+      "condition": "M",
+      "variant": "14x14_dense_kr_sg_kb_1",
+      "source": "ogbench/ogbench/procgen/maze_jsons/M6/14x14_dense_kr_sg_kb_1.json",
+      "expected_mechanisms": [],
+      "maze_family": "M",
+      "maze_category": "M6",
+      "notes": "topology=dense_dead_ends; grid=14"
+    },
+    {
+      "task_id": "r1_M6_8x8_corridor_kr_sg_kb_0",
+      "experiment": "r1",
+      "condition": "M",
+      "variant": "8x8_corridor_kr_sg_kb_0",
+      "source": "ogbench/ogbench/procgen/maze_jsons/M6/8x8_corridor_kr_sg_kb_0.json",
+      "expected_mechanisms": [],
+      "maze_family": "M",
+      "maze_category": "M6",
+      "notes": "topology=winding; grid=8"
+    },
+    {
+      "task_id": "r1_S4_10x10_dense_1",
+      "experiment": "r1",
+      "condition": "S",
+      "variant": "10x10_dense_1",
+      "source": "ogbench/ogbench/procgen/maze_jsons/S4/10x10_dense_1.json",
+      "expected_mechanisms": [],
+      "maze_family": "S",
+      "maze_category": "S4",
+      "notes": "topology=dense_dead_ends; grid=10"
+    },
+    {
+      "task_id": "r1_S5_14x14_corridor_0",
+      "experiment": "r1",
+      "condition": "S",
+      "variant": "14x14_corridor_0",
+      "source": "ogbench/ogbench/procgen/maze_jsons/S5/14x14_corridor_0.json",
+      "expected_mechanisms": [],
+      "maze_family": "S",
+      "maze_category": "S5",
+      "notes": "topology=winding; grid=14"
+    },
+    {
+      "task_id": "r1_S5_14x14_corridor_1",
+      "experiment": "r1",
+      "condition": "S",
+      "variant": "14x14_corridor_1",
+      "source": "ogbench/ogbench/procgen/maze_jsons/S5/14x14_corridor_1.json",
+      "expected_mechanisms": [],
+      "maze_family": "S",
+      "maze_category": "S5",
+      "notes": "topology=winding; grid=14"
+    }
+  ]
+}
