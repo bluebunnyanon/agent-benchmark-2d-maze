@@ -1,27 +1,64 @@
-# Agentic Evaluation in 2D Mazes
+### _How does your agent do on cross-domain, multimodal, long-horizon tasks?
 
-This repository contains the code, benchmark instances, evaluation harness, and reproducibility artifacts accompanying an anonymous submission on evaluating interactive multimodal agents in structured 2D maze environments.
+<p align="center">
+  <img src="assets/r1_failure_reels.gif" alt="Failure replay reels for Claude Opus 4.8, Kimi K2.6 and Qwen3.6-27B" width="100%">
+  <br>
+  <em>Claude Opus 4.8, Kimi K2.6 and Qwen 3.6 27B models failing on 2D mazes.</em>
+</p>
 
-## Overview
+## 🔍 A Preview of our Multi-Domain Agentic Benchmark
 
-The benchmark studies agent behavior in environments that require long-horizon interaction rather than single-step prediction. Agents must navigate partially observed mazes, execute actions, interact with mechanisms, recover from mistakes, and reach a target state.
+We aim to build interactive environments that are proxies for real-world scenarios. However, at the same time we are keen to keep the setup controllable, which will allow us to deterministically vary parameters in our environment in order to make it easier or more difficult for models to succeed in.
 
-The evaluation infrastructure includes:
+The capabilities we aim to benchmark are long-horizon action taking and causal reasoning, which involves various sub-capabilities such as planning, action execution, error recovery, visual object association, and so much more. A simple underlying substrate that brings all these aspects together for an environment and benchmarking task is a maze with mechanisms. Additionally, mazes with mechanisms are projectable into multiple domains: the same maze can be re-rendered in language or 3D or many other domains, quantifying cross-domain generalization. In this release, we evaluated 3 frontier VLMs on 50 2D mazes.
 
-* declarative 2D maze specifications
-* maze validation and solvability checks
-* environment implementations
-* model-facing observation and action interfaces
-* prompt and context-management configurations
-* adapters for evaluated models
-* episode execution and logging
-* mechanism-aware progress scoring
-* scripts for running and reproducing evaluations
-* the maze corpus used by the reported experiments
+## 🧩 What we built
 
-## Installation
+- **The environment:** 8×8 to 14×14 [MiniGrid](https://github.com/Farama-Foundation/Minigrid) mazes with an action space containing 6 valid actions: turn left, turn right, move forward, pickup, toggle, and done. The agent must navigate corridors, dead ends, distractors and decoys, operate mechanisms in the right order and reach a goal tile.
+- **A validator and BFS oracle:** every maze is confirmed solvable, with checks for mechanism necessity, chain ordering, and distractor safety. The oracle yields the exact optimal action sequence from any reachable state, giving objective difficulty, partial credit, and the ability to label a single move as strictly wrong.
+- **An evaluation harness:** a config-driven episode runner (prompt assembly, strict action parsing, per-episode artifact logging, a progress-stall watchdog, difficulty-relative step caps), model adapters behind one interface, mechanism-aware scoring, and the distributed run infrastructure that executed the evaluation across a fleet of VMs and GPUs.
+- **An ablation-derived protocol:** extensive experiments were run across 540 episodes to finalize the evaluation protocol for the final run on 50 mazes.
 
-Python 3.10 or later is recommended.
+## 📊 A peek into the results
+
+We evaluated **Claude Opus 4.8** (xhigh thinking), **Kimi k2.6** (thinking), and **Qwen3.6-27B** (thinking) on 50 difficulty-balanced mazes, with an equal 64k output-token budget.
+
+<div align="center">
+<table>
+  <thead>
+    <tr>
+      <th></th>
+      <th>Claude Opus 4.8</th>
+      <th>Kimi k2.6</th>
+      <th>Qwen3.6-27B</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Mazes solved (/50)</td>
+      <td align="center">4</td>
+      <td align="center">1</td>
+      <td align="center">1</td>
+    </tr>
+    <tr>
+      <td>Mean action progress</td>
+      <td align="center">0.19</td>
+      <td align="center">0.23</td>
+      <td align="center">0.23</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+**6 solves out of 150 episodes. 45 of the 50 mazes were solved by no model at all.** These are puzzles a person who has never seen one solves in a few minutes. Try out some of the mazes and see how you fare!
+
+<p align="center">
+  <img src="assets/r1_progress_grid.png" alt="Progress score per maze × model" width="100%">
+  <br>
+  <em>Progress per maze (columns) per model (rows); stars mark the six solves.</em>
+</p>
+
+## 🚀 Quickstart
 
 ```bash
 conda create -n maze-benchmark python=3.10
@@ -29,212 +66,49 @@ conda activate maze-benchmark
 pip install -e ".[dev,visual]"
 ```
 
-Alternatively:
-
-```bash
-python -m venv .venv
-source .venv/bin/activate
-pip install -e ".[dev,visual]"
-```
-
-On Windows PowerShell:
-
-```powershell
-python -m venv .venv
-.venv\Scripts\Activate.ps1
-pip install -e ".[dev,visual]"
-```
-
-## Verify the Installation
-
-The core test suite does not require model API keys or a GPU.
-
-```bash
-pytest
-```
-
-Load-sensitive performance tests are excluded by default. To run them explicitly:
-
-```bash
-pytest -m slow
-```
-
-## Repository Structure
-
-```text
-.
-├── gridworld/               Maze specifications, fixtures, validation,
-│                            difficulty computation, and environment logic
-├── interface/               Episode runner, agent interfaces, observations,
-│                            action parsing, and interaction protocol
-├── prompting_experiments/   Prompt templates and protocol configurations
-├── pipeline/                Evaluation-pipeline utilities
-├── scorer/                  Static and runtime progress scoring
-├── scripts/                 Evaluation and analysis entry points
-├── demo/                    Human-playable evaluation interface
-├── ogbench/                 Vendored benchmark maze corpus and supporting code
-├── tests/                   Test suite
-├── assets/                  Evaluation figures and visualizations
-├── RUNME.md                 Extended operator/reproduction instructions
-└── pyproject.toml           Package and dependency configuration
-```
-
-## Maze Benchmark
-
-Maze instances are represented as structured task specifications. Tasks may contain corridors, dead ends, distractors, keys, doors, switches, and other mechanisms that constrain the valid solution sequence.
-
-The benchmark includes validation utilities that check whether a task is solvable and compute properties related to its difficulty.
-
-To validate the included task specifications:
+Mazes are declarative JSON task specifications. Validate every example spec in the repo and rank them by difficulty:
 
 ```bash
 python -m gridworld.task_validator
 ```
 
-## Evaluation Protocol
-
-An evaluation is defined by two main inputs:
-
-1. a **run configuration**, specifying models and inference settings;
-2. a **manifest**, specifying the maze instances included in the evaluation.
-
-The canonical evaluation pipeline is:
-
-```bash
-python -m scripts.run_pipeline \
-  --run-config <run-config.json> \
-  --manifest <manifest.json> \
-  --seeds 0
+```
+  [PASS] tier3_key_switch_001: optimal=30 steps, mechanisms=4, score=70.61
+  ...
+=== Summary: 16/16 tasks beatable ===
 ```
 
-Evaluation artifacts are written under the run artifact directory and include episode-level trajectories and scores.
+To build your own maze, copy a spec from `gridworld/tasks/`, edit the layout and mechanisms, then validate and render it:
 
-## Smoke Test
+```python
+from PIL import Image
 
-A small smoke configuration can be used to verify the complete model-evaluation loop:
+from gridworld.task_spec import TaskSpecification
+from gridworld.task_validator import compute_difficulty
+from gridworld.backends.minigrid_backend import MiniGridBackend
 
-```bash
-python -m scripts.run_pipeline \
-  --run-config gridworld/fixtures/run_config.smoke_claude_sonnet.json \
-  --manifest gridworld/fixtures/manifest.smoke_eval.json \
-  --seeds 0
+spec = TaskSpecification.from_json("gridworld/tasks/tier3/key_switch_001.json")
+
+report = compute_difficulty(spec)
+print(report.is_beatable, report.optimal_steps, report.mechanism_count)
+
+backend = MiniGridBackend()
+backend.configure(spec)
+backend.reset(seed=0)
+Image.fromarray(backend.render()).save("maze.png")
 ```
 
-This requires an appropriate model-provider API key.
+`compute_difficulty` runs the BFS oracle: if your maze is unsolvable, has a decorative mechanism, or has a distractor that can strand the agent, it will tell you.
 
-For example:
+## 📁 Repository structure
 
-```bash
-export ANTHROPIC_API_KEY=<your-key>
-```
+| Path | Contents |
+|---|---|
+| `gridworld/` | task specification, maze validator, BFS oracle, MiniGrid + MultiGrid backends |
+| `interface/` | episode runner, prompt assembly, action parsing, model adapters |
+| `prompting_experiments/` | every prompt template used in the protocol sweep |
+| `scorer/` | static and runtime scoring, mechanism-aware progress |
+| `demo/` | the playable maze demo |
+| `scripts/` | evaluation pipeline entrypoints and run tooling |
 
-The smoke configuration is intended to verify the pipeline, not to reproduce the reported benchmark results.
 
-## Reproducing the Main Evaluation
-
-The configuration corresponding to the main evaluation is included in the repository:
-
-```bash
-python -m scripts.run_pipeline \
-  --run-config gridworld/fixtures/run_config.r1.json \
-  --manifest gridworld/fixtures/manifest.r1_balanced_03.json \
-  --seeds 0
-```
-
-The evaluated model set includes remotely hosted and locally served models. Reproducing the complete evaluation therefore requires the corresponding provider credentials and, for locally served models, suitable GPU infrastructure.
-
-Relevant provider credentials can be supplied through environment variables such as:
-
-```bash
-export ANTHROPIC_API_KEY=<your-key>
-export MOONSHOT_API_KEY=<your-key>
-```
-
-Locally served models use an OpenAI-compatible endpoint configured in the corresponding run configuration.
-
-Running the complete evaluation may incur API and compute costs.
-
-## Scoring
-
-Scoring is integrated into the evaluation pipeline.
-
-The scorer combines task-level structure with runtime episode behavior to measure progress through the required interaction sequence.
-
-Existing episode outputs can also be rescored independently:
-
-```bash
-multinet-score-json --help
-```
-
-The scoring implementation is located in:
-
-```text
-scorer/
-```
-
-## Model Interface
-
-Agents interact with the benchmark through a common interface.
-
-To add another model, implement an agent exposing the expected generation interface in:
-
-```text
-interface/agents/
-```
-
-and register the corresponding provider in the evaluation pipeline.
-
-The harness handles:
-
-* prompt construction
-* observation formatting
-* action parsing
-* environment stepping
-* episode termination
-* trajectory logging
-* scoring
-
-This allows different models to be evaluated under the same environment and interaction protocol.
-
-## Human-Playable Interface
-
-A human-playable version of the maze environment is also included.
-
-For example:
-
-```bash
-python play_task.py <path-to-maze.json>
-```
-
-A directory or manifest can also be supplied to browse multiple tasks.
-
-The human interface uses the same underlying environment and observation infrastructure as the model-facing evaluation pipeline.
-
-## Reproducibility
-
-The repository contains the components required to reconstruct the evaluation described in the accompanying submission, including:
-
-* benchmark maze instances
-* evaluation manifests
-* model run configurations
-* prompts and interaction protocol
-* environment implementation
-* task validator
-* evaluation harness
-* scoring implementation
-* test suite
-* execution scripts
-
-Model API responses may vary over time for externally hosted systems. The provided configurations record the inference settings used for the reported evaluation.
-
-## Additional Instructions
-
-More detailed execution and operator instructions are available in:
-
-```text
-RUNME.md
-```
-
-## License
-
-This anonymous review artifact is distributed under the MIT License. Attribution has been anonymized for double-blind review and will be restored in the public version following review.
