@@ -1,4 +1,4 @@
-### _How does your agent do on cross-domain, multimodal, long-horizon tasks?
+# How does your agent do on cross-domain, multimodal, long-horizon tasks?
 
 <p align="center">
   <img src="assets/r1_failure_reels.gif" alt="Failure replay reels for Claude Opus 4.8, Kimi K2.6 and Qwen3.6-27B" width="100%">
