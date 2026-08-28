@@ -1,10 +1,6 @@
-# How does your agent do on cross-domain, multimodal, long-horizon tasks?
+# Attributing Agentic Failure in Reasoning Vision-Language Models with Interactive 2D Environments
 
-<p align="center">
-  <img src="assets/r1_failure_reels.gif" alt="Failure replay reels for Claude Opus 4.8, Kimi K2.6 and Qwen3.6-27B" width="100%">
-  <br>
-  <em>Claude Opus 4.8, Kimi K2.6 and Qwen 3.6 27B models failing on 2D mazes.</em>
-</p>
+
 
 ## 🔍 A Preview of our Multi-Domain Agentic Benchmark
 
